@@ -1,1 +1,2 @@
-# shiksha_ek_abhiyaan_trust
+# Educational-Website
+A responsive front end website
