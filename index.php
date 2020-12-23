@@ -164,6 +164,9 @@ if(mysqli_connect_errno())
 <!-- //bootstrap-pop-up -->
 <!-- register -->
 
+	
+	
+	<div class="mailphp" style="display:none;">
 	<?php
 
 		if(isset($_POST['send'])){
@@ -203,11 +206,38 @@ if(mysqli_connect_errno())
 			$mail->addAddress('tarun.bhati11111@gmail.com', 'Tarun Bhati');
 		       
 		    $mail->isHTML(true);                                   
-		    $mail->Subject = 'Subject'; 
-		    $mail->Body    = 'HTML message body in <b>bold</b> '; 
-		    $mail->AltBody = 'Body in plain text for non-HTML mail clients'; 
+		    $mail->Subject = 'New User Registered for Sponsorship'; 
+		    $mail->Body    = 'Hi Shiksha Ek Abhiyaan Trust Team,<br><br><br> A new user has registered on the website for sponsoring the education of a children, Please Contact the user for more details. Details of the registered user are mentioned below: <br><br>';
+		    $mail->Body   .= '<b>First Name: </b>'.$fname.'<br><b>Last Name: </b>'.$lname.'<br><b>Email: </b>'.$em.'<br><b>Contact Number: </b>'.$cno;
+		    $mail->Body   .= '<br><br><br> Warm Regards,<br>Development Team<br>Shiksha Ek Abhiyaan Trust'; 
+		    $mail->AltBody = ''; 
 		    $mail->send(); 
-		    echo "Mail has been sent successfully!"; 
+		    
+		} catch (Exception $e) { 
+		    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}"; 
+		} 
+		
+		
+		$mail2 = new PHPMailer(true); 
+		try { 
+		    $mail2->SMTPDebug = 2;                                        
+		    $mail2->isSMTP();                                             
+		    $mail2->Host       = 'smtp.gmail.com;';                     
+		    $mail2->SMTPAuth   = true;                              
+		    $mail2->Username   = 'shikshaekabhiyaantrust@gmail.com';                  
+		    $mail2->Password   = 'sahilsahil';                         
+		    $mail2->SMTPSecure = 'tls';                               
+		    $mail2->Port       = 25;   
+
+		    $mail2->setFrom('shikshaekabhiyaantrust@gmail.com', 'Shiksha Ek Abhiyaan');
+		    $mail2->addAddress($em,$fname);
+		       
+		    $mail2->isHTML(true);                                   
+		    $mail2->Subject = 'Registration Completed'; 
+		    $mail2->Body    = 'Hi '.$fname.',<br><br> We are glad to welcome you to the <b>Shiksha Ek Abhiyan Team.</b>You have registered successfully for sponsoring. We will contact you shortly for further details.<br><br>';
+		    $mail2->Body   .= '<br><br> Warm Regards,<br>--name of head--<br>--designation--<br>Shiksha Ek Abhiyaan Trust'; 
+		    $mail2->AltBody = ''; 
+		    $mail2->send(); 
 		} catch (Exception $e) { 
 		    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}"; 
 		} 
@@ -218,6 +248,9 @@ if(mysqli_connect_errno())
 
 
 	?>
+	</div>
+	
+	
 	<div class="register">
 		<div class="container">
 			<div class="col-md-6 w3layouts_register_right">
